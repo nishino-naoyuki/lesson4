@@ -1,0 +1,58 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="/layout :: head"></head>
+
+<body>
+  <!-- <div th:replace="layout::headerNav"></div> -->
+  <!-- layoutからヘッダーナビゲーションheaderNavを読み込み -->
+
+  <div class="container">
+    <div class="row">
+
+      <!-- <div th:replace="layout::sidebarMenu"></div> -->
+      <!-- layoutからサイドバーメニューsidebarMenuを読み込み -->
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+        <!-- <div th:replace="layout::title(TODO)"></div> -->
+        <!-- layoutからページタイトルtitle(タイトル名)を読み込み。タイトルはTODOに設定 -->
+
+        <form method="post" action="#" th:action="@{/todo/insert}" th:object="${todoForm}"
+          class="w-50 g-3 needs-validation">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="todo" name="todo" placeholder="新しいTODOを追加してください">
+            <!-- inputにバリデーションエラー時のclassを記入 -->
+            <button class=" btn btn-secondary" type="submit" id="button-addon">+</button>
+            <div th:if="${#fields.hasErrors('todo')}" th:errors="*{todo}" class="invalid-feedback"></div>
+          </div>
+        </form>
+        <div class="table-responsive w-50">
+          <table class="table">
+            <tbody>
+              <tr>
+                <!-- todoリストを繰り返し表示するように修正 -->
+                <td scope="row">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
+                    th:checked="${todo.checked}" th:attr="onChange='location.href=\''+ ---- 更新用URL ---- +'\''">
+                </td>
+                <td th:text="${todo.todo}"></td>
+                <td>
+                  <a class="btn btn-light rounded-circle p-0 pt-1" th:href="@{---- 削除URL ----}"
+                    style="width:2rem; height:2rem;">
+                    <i class="bi bi-trash-fill"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+<div th:replace="/layout :: script"></div>
+
+</html>
